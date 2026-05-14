@@ -1,12 +1,8 @@
+flask
+gunicorn
 tensorflow
 numpy
-pandas
-matplotlib
-opencv-python
-scikit-learn
-Pillow
-tqdm
-seaborn
-scipy
-flask
+opencv-python-headless
+pillow
 werkzeug
+scikit-learn
