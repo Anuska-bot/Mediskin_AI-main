@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | Mediskin AI</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", -apple-system, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        linear-gradient(rgba(0, 6, 5, 0.55), rgba(245, 255, 253, 0.55)),
+        url("{{ url_for('static', filename='1.jpg') }}");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      background: #054c43;
+      color: white;
+      padding: 18px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .navbar h1 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .navbar span {
+      color: #4DB8AE;
+    }
+
+    .nav-links a {
+      margin-left: 32px;
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      font-size: 15px;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #4DB8AE;
+    }
+
+    /* AUTH CONTAINER */
+    .auth-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      padding: 40px 20px;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 1000px;
+      height: 550px;
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 20px;
+      display: flex;
+      overflow: hidden;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+      backdrop-filter: blur(10px);
+    }
+
+    /* LEFT FORM */
+    .auth-form {
+      flex: 1;
+      padding: 70px 55px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .auth-form h2 {
+      font-size: 34px;
+      font-weight: 700;
+      color: #00695C;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 36px;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .auth-form input {
+      width: 100%;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      border-radius: 10px;
+      border: 1.5px solid #ddd;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .auth-form input:focus {
+      outline: none;
+      border-color: #00897B;
+      box-shadow: 0 0 0 3px rgba(0,137,123,0.1);
+    }
+
+    .auth-form button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #26A69A, #00897B);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,137,123,0.25);
+      transition: all 0.3s ease;
+      margin-top: 8px;
+    }
+
+    .auth-form button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(0,137,123,0.35);
+    }
+
+    .auth-form button:active {
+      transform: translateY(0);
+    }
+
+    .switch {
+      margin-top: 24px;
+      font-size: 15px;
+      color: #666;
+    }
+
+    .switch a {
+      color: #00897B;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .switch a:hover {
+      color: #00695C;
+    }
+
+    /* RIGHT IMAGE */
+    .auth-image {
+      flex: 1;
+      background: linear-gradient(135deg, #00897B 0%, #26A69A 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+    }
+
+    .auth-image img {
+      width: 75%;
+      border-radius: 16px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    }
+
+    /* RESPONSIVE */
+    @media(max-width: 900px) {
+      .auth-card {
+        flex-direction: column;
+        height: auto;
+        max-height: 700px;
+      }
+      .auth-image {
+        display: none;
+      }
+      .auth-form {
+        padding: 50px 40px;
+      }
+      .navbar {
+        padding: 16px 30px;
+      }
+      .nav-links a {
+        margin-left: 20px;
+      }
+    }
+
+    @media(max-width: 600px) {
+      .auth-form {
+        padding: 40px 25px;
+      }
+      .auth-form h2 {
+        font-size: 28px;
+      }
+      .navbar h1 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <h1>Medi<span>skin</span> AI</h1>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/login">Login</a>
+    <a href="/register">Register</a>
+  </div>
+</div>
+
+<!-- LOGIN SECTION -->
+<div class="auth-container">
+  <div class="auth-card">
+
+    <div class="auth-form">
+      <h2>Welcome Back</h2>
+      <p class="subtitle">
+        AI-powered skin disease detection & medical assistance platform
+      </p>
+
+      <form method="POST">
+        <input type="email" name="email" placeholder="Email Address" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Login to Dashboard</button>
+      </form>
+
+      <p class="switch">
+        Don’t have an account?
+        <a href="/register">Create one</a>
+      </p>
+    </div>
+
+    <!-- LOGO IMAGE -->
+    <div class="auth-image">
+      <img src="{{ url_for('static', filename='2.jpg') }}" alt="Mediskin AI Logo">
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

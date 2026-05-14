@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Predict Skin Disease | Mediskin AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F8F5EF;
+      --cream-2: #EFE9DE;
+      --cream-3: #E4DBCC;
+      --sage: #5A7A60;
+      --sage-dark: #3D5C43;
+      --sage-deep: #243728;
+      --sage-light: #B8D4BB;
+      --sage-dim: rgba(90,122,96,0.08);
+      --sage-border: rgba(90,122,96,0.2);
+      --text: #1A2A1C;
+      --muted: #6E8070;
+      --border: rgba(90,122,96,0.13);
+      --white: #FFFFFF;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      min-height:100vh;
+      font-family:'Inter', sans-serif;
+      background:var(--cream);
+      display:flex; flex-direction:column;
+      position:relative; overflow-x:hidden;
+    }
+    .bg-pattern {
+      position:fixed; inset:0; z-index:0; pointer-events:none;
+      background-color: #F0EDE6;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='60' viewBox='0 0 140 60'%3E%3Cpath d='M0 30 L25 30 L33 8 L41 52 L49 18 L57 30 L140 30' fill='none' stroke='%235A7A60' stroke-opacity='0.14' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Crect x='110' y='14' width='3' height='12' rx='1' fill='%235A7A60' fill-opacity='0.11'/%3E%3Crect x='105' y='19' width='13' height='3' rx='1' fill='%235A7A60' fill-opacity='0.11'/%3E%3C/svg%3E");
+      background-size: 140px 60px;
+    }
+    .bg-orb-1 {
+      position:fixed; width:600px; height:600px; z-index:0; pointer-events:none;
+      background:radial-gradient(ellipse, rgba(90,122,96,0.1) 0%, transparent 65%);
+      top:-180px; left:-120px;
+    }
+    .bg-orb-2 {
+      position:fixed; width:480px; height:480px; z-index:0; pointer-events:none;
+      background:radial-gradient(ellipse, rgba(184,212,187,0.18) 0%, transparent 65%);
+      bottom:-100px; right:-80px;
+    }
+    nav, main { position:relative; z-index:1; }
+
+    /* NAV */
+    nav {
+      padding:18px 60px;
+      display:flex; justify-content:space-between; align-items:center;
+      background:rgba(248,245,239,0.9); backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--border);
+      position:sticky; top:0; z-index:100;
+    }
+    .logo-wrap { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .logo-icon { width:38px; height:38px; flex-shrink:0; }
+    .logo-text {
+      font-family:'Inter', sans-serif;
+      font-size:20px; font-weight:800;
+      color:var(--sage-deep);
+    }
+    .logo-text span { color:var(--sage); }
+    .nav-links { display:flex; gap:6px; }
+    .nav-links a {
+      padding:8px 20px; text-decoration:none; color:var(--muted);
+      font-size:13.5px; font-weight:600;
+      border-radius:30px; transition:all 0.22s; border:1.5px solid transparent;
+    }
+    .nav-links a:hover { color:var(--sage-dark); background:var(--sage-dim); border-color:var(--border); }
+    .nav-links a.active { background:var(--sage-deep); color:var(--white); border-color:var(--sage-deep); }
+
+    main { flex:1; display:flex; align-items:center; justify-content:center; padding:60px 24px; }
+
+    .predict-card {
+      background:var(--white);
+      border:1.5px solid var(--cream-3);
+      border-radius:24px;
+      padding:50px 58px;
+      width:100%; max-width:700px;
+      box-shadow:0 32px 80px rgba(36,55,40,0.1);
+    }
+
+    .predict-card h1 {
+      font-size:38px; font-weight:800;
+      color:var(--text); margin-bottom:16px;
+    }
+
+    .predict-card .subtitle {
+      color:var(--muted); font-size:16px;
+      line-height:1.65; margin-bottom:40px; font-weight:500;
+    }
+
+    .form-group { margin-bottom:24px; }
+    .form-group label {
+      display:block; font-size:12px; font-weight:700;
+      color:var(--text); margin-bottom:10px;
+      text-transform:uppercase; letter-spacing:0.5px;
+    }
+
+    .file-input-wrapper {
+      position:relative;
+      border:2px dashed var(--sage-border);
+      border-radius:12px;
+      padding:32px;
+      text-align:center;
+      cursor:pointer;
+      transition:all 0.25s;
+      background:var(--cream);
+    }
+    .file-input-wrapper:hover {
+      border-color:var(--sage);
+      background:rgba(90,122,96,0.04);
+    }
+    .file-input-wrapper input {
+      display:none;
+    }
+    .file-input-wrapper svg {
+      width:40px; height:40px;
+      margin-bottom:12px;
+      opacity:0.6;
+    }
+    .file-input-wrapper p {
+      color:var(--text); font-weight:600; font-size:15px;
+      margin-bottom:6px;
+    }
+    .file-input-wrapper span {
+      color:var(--muted); font-size:13px;
+    }
+
+    select {
+      width:100%; padding:14px 16px;
+      border:1.5px solid var(--cream-3);
+      border-radius:12px;
+      font-size:15px; font-family:'Inter', sans-serif;
+      color:var(--text); background:var(--cream);
+      cursor:pointer; transition:all 0.22s;
+    }
+    select:hover {
+      border-color:var(--sage-border);
+    }
+    select:focus {
+      outline:none; border-color:var(--sage);
+      background:var(--white); box-shadow:0 0 0 4px rgba(90,122,96,0.1);
+    }
+
+    .submit-btn {
+      width:100%; padding:15px;
+      background:var(--sage-deep); color:var(--white);
+      border:none; border-radius:14px;
+      font-size:15px; font-weight:800;
+      cursor:pointer; transition:all 0.25s;
+      box-shadow:0 6px 24px rgba(36,55,40,0.22);
+      letter-spacing:0.3px;
+    }
+    .submit-btn:hover {
+      background:var(--sage-dark);
+      transform:translateY(-2px);
+      box-shadow:0 14px 36px rgba(36,55,40,0.28);
+    }
+
+    .tips {
+      margin-top:40px;
+      padding:24px;
+      background:var(--cream);
+      border:1.5px solid var(--sage-border);
+      border-radius:12px;
+    }
+    .tips h4 {
+      font-size:14px; font-weight:700;
+      color:var(--text); margin-bottom:12px;
+    }
+    .tips ul {
+      padding-left:20px;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .tips li {
+      margin-bottom:8px; line-height:1.6;
+    }
+
+    .disclaimer {
+      text-align:center;
+      margin-top:32px;
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.6;
+    }
+
+    @media(max-width:768px) {
+      main { padding:40px 20px; }
+      nav { padding:18px 24px; }
+      .predict-card { padding:40px 28px; }
+      .predict-card h1 { font-size:32px; }
+    }
+  </style>
+</head>
+<body>
+<div class="bg-pattern"></div>
+<div class="bg-orb-1"></div>
+<div class="bg-orb-2"></div>
+
+<nav>
+  <a class="logo-wrap" href="/">
+    <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="40" height="40" rx="10" fill="#243728"/>
+      <path d="M20 8C20 8 10 14 10 22C10 27.5 14.5 32 20 32C25.5 32 30 27.5 30 22C30 14 20 8 20 8Z" fill="#5A7A60"/>
+      <path d="M20 8C20 8 26 16 24 24C22.5 29 20 32 20 32" stroke="#B8D4BB" stroke-width="1.5" stroke-linecap="round"/>
+      <rect x="18" y="13" width="4" height="12" rx="1.5" fill="white" opacity="0.9"/>
+      <rect x="14" y="17" width="12" height="4" rx="1.5" fill="white" opacity="0.9"/>
+    </svg>
+    <span class="logo-text">Medi<span>skin</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="/dashboard">Dashboard</a>
+    <a href="/predict" class="active">Predict</a>
+    <a href="/logout">Logout</a>
+  </div>
+</nav>
+
+<main>
+  <div class="predict-card">
+    <h1>Skin Disease Prediction</h1>
+    <p class="subtitle">Upload a clear image of the affected skin area and select your city. Our AI model will analyze and provide predictions along with nearby hospital recommendations.</p>
+
+    <form method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label>Upload Skin Image</label>
+        <label for="image" class="file-input-wrapper">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          <p>Click to upload or drag and drop</p>
+          <span>PNG, JPG up to 10MB</span>
+          <input type="file" id="image" name="image" accept=".jpg,.jpeg,.png" required>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>Select Location</label>
+        <select name="location" required>
+          <option value="">Choose your city</option>
+          <option value="Delhi">Delhi</option>
+          <option value="Mumbai">Mumbai</option>
+          <option value="Bangalore">Bangalore</option>
+          <option value="Chennai">Chennai</option>
+          <option value="Hyderabad">Hyderabad</option>
+          <option value="Pune">Pune</option>
+          <option value="Kolkata">Kolkata</option>
+        </select>
+      </div>
+
+      <button type="submit" class="submit-btn">Analyze Image with AI →</button>
+    </form>
+
+    <div class="tips">
+      <h4>💡 Tips for Best Results</h4>
+      <ul>
+        <li>Ensure the image is clear and well-lit</li>
+        <li>Avoid blurry or distant images</li>
+        <li>Capture only the affected skin area</li>
+        <li>Do not apply filters or edits to the image</li>
+      </ul>
+    </div>
+
+    <p class="disclaimer">⚠️ This prediction is AI-generated and intended for educational assistance only. Please consult a certified dermatologist for medical advice.</p>
+  </div>
+</main>
+</body>
+</html>
