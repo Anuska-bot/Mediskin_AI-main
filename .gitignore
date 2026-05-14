@@ -1,16 +1,60 @@
-# Virtual environment
-
+# Virtual Environment
+venv/
 .venv/
-
-# Dataset (do not upload images)
-dataset/
 
 # Python cache
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
 
-# Jupyter
+# Jupyter Notebook
 .ipynb_checkpoints/
+*.ipynb
+
+# Dataset / Training files
+dataset/
+datasets/
+data/
+
+# ML Models
+models/
+*.h5
+*.keras
+*.pkl
+*.joblib
+*.ckpt
+
+# Uploaded Images
+app/static/uploads/
+
+# Logs
+*.log
+
+# SQLite Database
+*.db
+
+# Environment Variables
+.env
+
+# Node modules (if frontend exists)
+node_modules/
+
+# Build folders
+dist/
+build/
+
+# VS Code
+.vscode/
 
 # OS files
 .DS_Store
+Thumbs.db
+
+# Images used for training/analysis
+*.png
+*.jpg
+*.jpeg
+
+# Temporary files
+temp/
+tmp/
