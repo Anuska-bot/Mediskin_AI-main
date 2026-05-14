@@ -1,60 +1,103 @@
+# =========================
 # Virtual Environment
+# =========================
 venv/
 .venv/
 
-# Python cache
+# =========================
+# Python Cache
+# =========================
 __pycache__/
 *.py[cod]
 *$py.class
 
+# =========================
 # Jupyter Notebook
+# =========================
 .ipynb_checkpoints/
 *.ipynb
 
-# Dataset / Training files
+# =========================
+# Dataset / Training Files
+# =========================
 dataset/
 datasets/
 data/
 
-# ML Models
+# =========================
+# Machine Learning Models
+# =========================
 models/
 *.h5
 *.keras
 *.pkl
 *.joblib
 *.ckpt
+*.pb
 
-# Uploaded Images
+# =========================
+# Uploaded Files / Images
+# =========================
 app/static/uploads/
 
+# =========================
 # Logs
+# =========================
 *.log
 
+# =========================
 # SQLite Database
+# =========================
 *.db
 
+# =========================
 # Environment Variables
+# =========================
 .env
 
-# Node modules (if frontend exists)
+# =========================
+# Node Modules
+# =========================
 node_modules/
 
-# Build folders
+# =========================
+# Build Folders
+# =========================
 dist/
 build/
 
+# =========================
 # VS Code
+# =========================
 .vscode/
 
-# OS files
+# =========================
+# Testing
+# =========================
+.pytest_cache/
+
+# =========================
+# OS Files
+# =========================
 .DS_Store
 Thumbs.db
+Desktop.ini
+ehthumbs.db
 
-# Images used for training/analysis
+# =========================
+# Images (optional)
+# =========================
 *.png
 *.jpg
 *.jpeg
 
-# Temporary files
+# =========================
+# Temporary Files
+# =========================
 temp/
 tmp/
+
+# =========================
+# Vercel
+# =========================
+.vercel/
