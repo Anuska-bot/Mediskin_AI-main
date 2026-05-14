@@ -1,8 +1,12 @@
-flask
-gunicorn
 tensorflow
 numpy
-opencv-python-headless
-pillow
-werkzeug
+pandas
+matplotlib
+opencv-python
 scikit-learn
+Pillow
+tqdm
+seaborn
+scipy
+flask
+werkzeug
