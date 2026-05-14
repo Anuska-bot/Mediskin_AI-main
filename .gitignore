@@ -1,5 +1,5 @@
 # Virtual environment
-venv/
+
 .venv/
 
 # Dataset (do not upload images)
@@ -14,20 +14,3 @@ __pycache__/
 
 # OS files
 .DS_Store
-# Virtual environment
-venv/
-.venv/
-
-# Dataset (do not upload images)
-dataset/
-
-# Python cache
-__pycache__/
-*.pyc
-
-# Jupyter
-.ipynb_checkpoints/
-
-# OS files
-.DS_Store
-
