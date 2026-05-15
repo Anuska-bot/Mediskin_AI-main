@@ -3,7 +3,7 @@ import sqlite3
 import os
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
-from model_predict import predict_disease
+from .model_predict import predict_disease
 
 app = Flask(
     __name__,
