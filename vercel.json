@@ -2,7 +2,11 @@
   "buildCommand": "pip install -r requirements.txt",
   "functions": {
     "api/index.py": {
+<<<<<<< HEAD
       "runtime": "python3.9"
+=======
+      "runtime": "python@3.9"
+>>>>>>> fdcf79739d1ffab6ab07234e17d19b5ff433114f
     }
   },
   "env": {
