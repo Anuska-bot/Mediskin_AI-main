@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "buildCommand": "pip install -r requirements.txt",
   "functions": {
     "api/index.py": {
@@ -12,4 +13,7 @@
   "env": {
     "PYTHONUNBUFFERED": "1"
   }
+=======
+  "buildCommand": "pip install -r requirements.txt"
+>>>>>>> 82219ba15bdfb57e491dd7671315f454091cd6dd
 }
