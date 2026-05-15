@@ -1,11 +1,3 @@
 {
-  "buildCommand": "pip install -r requirements.txt",
-  "functions": {
-    "api/index.py": {
-      "runtime": "python@3.9"
-    }
-  },
-  "env": {
-    "PYTHONUNBUFFERED": "1"
-  }
+  "buildCommand": "pip install -r requirements.txt"
 }
